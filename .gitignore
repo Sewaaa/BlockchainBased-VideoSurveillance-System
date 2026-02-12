@@ -1,0 +1,28 @@
+# Dependencies
+**/node_modules/
+
+# Build outputs / artifacts
+script/source/build/
+**/*.exe
+
+# Local secrets / keys
+script/autenticazioneCamera/camera_keys.json
+script/autenticazioneCamera/signed_photo.json
+**/INFO.txt
+**/*.env
+
+# Runtime outputs (photos, hashes, CIDs)
+mqtt-go/*.cid
+mqtt-go/*.sha256
+mqtt-go/*.enc
+mqtt-go/*.jpg
+mqtt-go/*.png
+
+# Python caches
+**/__pycache__/
+**/*.pyc
+
+# Logs / OS files
+*.log
+.DS_Store
+Thumbs.db

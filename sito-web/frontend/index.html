@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32-CAM Firefly Security Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- CryptoJS for hashing -->
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🎥 ESP32-CAM Security System</h1>
+            <div id="wallet-info">
+                <button id="connectWallet" class="btn btn-primary">Connect to Firefly</button>
+                <span id="accountAddress" class="hidden"></span>
+                <span id="networkStatus" class="status-indicator"></span>
+            </div>
+        </header>
+
+        <!-- Stats Dashboard -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Photos</h3>
+                <p id="totalPhotos" class="stat-number">0</p>
+            </div>
+<!--            <div class="stat-card">-->
+<!--                <h3>Authorized Cameras</h3>-->
+<!--                <p id="authorizedCameras" class="stat-number">-</p>-->
+<!--            </div>-->
+<!--            <div class="stat-card">-->
+<!--                <h3>Photos Today</h3>-->
+<!--                <p id="photosToday" class="stat-number">0</p>-->
+<!--            </div>-->
+            <div class="stat-card">
+                <h3>Contract Status</h3>
+                <p id="contractStatus" class="stat-number">Active</p>
+            </div>
+        </section>
+
+        <!-- Camera Management -->
+<!--        <section class="camera-section">-->
+<!--            <h2>📷 Camera Management</h2>-->
+<!--            <div class="camera-controls">-->
+<!--                <input type="text" id="cameraAddress" placeholder="0x...  Camera Address">-->
+<!--                <button id="authorizeCamera" class="btn btn-success">Authorize Camera</button>-->
+<!--                <button id="revokeCamera" class="btn btn-danger">Revoke Camera</button>-->
+<!--                <button id="checkCamera" class="btn btn-info">Check Status</button>-->
+<!--            </div>-->
+<!--            <div id="cameraStatus" class="status-message"></div>-->
+<!--        </section>-->
+
+        <!-- Manual Photo Upload -->
+        <section class="upload-section">
+            <h2>📤 Manual Photo Upload</h2>
+            <div class="upload-controls">
+                <input type="file" id="photoInput" accept="image/*">
+                <input type="text" id="locationInput" placeholder="Location (optional)">
+                <input type="text" id="metadataInput" placeholder="Metadata (optional)" maxlength="140">
+                <button id="uploadPhoto" class="btn btn-primary">Upload to Blockchain</button>
+            </div>
+            <div id="uploadStatus" class="status-message"></div>
+            <div id="photoPreview" class="photo-preview"></div>
+        </section>
+
+        <!-- Batch Upload -->
+        <section class="batch-section">
+            <h2>📦 Batch Upload</h2>
+            <div class="batch-controls">
+                <input type="file" id="batchInput" accept="image/*" multiple>
+                <button id="batchUpload" class="btn btn-warning">Batch Upload (Max 50)</button>
+            </div>
+            <div id="batchProgress" class="progress-bar"></div>
+            <div id="batchStatus" class="status-message"></div>
+        </section>
+
+        <!-- Photo Verification -->
+        <section class="verify-section">
+            <h2>🔍 Verify Photo</h2>
+            <div class="verify-controls">
+                <input type="file" id="verifyInput" accept="image/*">
+                <button id="verifyPhoto" class="btn btn-info">Verify on Blockchain</button>
+            </div>
+            <div id="verifyResult" class="result-card"></div>
+        </section>
+
+        <!-- Recent Photos -->
+        <section class="photos-section">
+            <h2>📸 Recent Photos</h2>
+            <div class="filter-controls">
+                <button id="loadRecent" class="btn btn-secondary">Load Recent Photos</button>
+                <button id="refreshPhotos" class="btn btn-secondary">🔄 Refresh</button>
+            </div>
+            <div id="photoGrid" class="photo-grid">
+                <p class="placeholder-text">Click "Load Recent Photos" to view photos</p>
+            </div>
+        </section>
+
+        <!-- ESP32 Integration Panel -->
+        <section class="esp32-section">
+            <h2>🔧 ESP32-CAM Integration</h2>
+            <div class="esp32-info">
+                <h3>Relay Server Configuration</h3>
+                <pre id="esp32Config">
+Waiting for Firefly connection...
+                </pre>
+                <button id="copyConfig" class="btn btn-secondary">Copy Config</button>
+            </div>
+            <div class="esp32-info">
+                <h3>Arduino Code Snippet</h3>
+                <pre id="arduinoConfig">
+const char* fireflyRelayUrl = "http://YOUR_SERVER_IP:3000/upload-photo";
+const char* cameraAddress = "0xYOUR_CAMERA_ADDRESS";
+                </pre>
+                <button id="copyArduino" class="btn btn-secondary">Copy Arduino Config</button>
+            </div>
+        </section>
+
+        <!-- Event Log -->
+        <section class="events-section">
+            <h2>📋 Event Log</h2>
+<!--            <div class="event-controls">-->
+<!--                <button id="clearLog" class="btn btn-secondary">Clear Log</button>-->
+<!--            </div>-->
+            <div id="eventLog" class="event-log">
+                <div class="event-item">
+                    <div class="event-time">${new Date().toLocaleString()}</div>
+                    <div class="event-message">System initialized.  Click "Connect to Firefly" to begin. </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config-firefly.js"></script>
+    <script src="js/firefly-integration.js"></script>
+</body>
+</html>
